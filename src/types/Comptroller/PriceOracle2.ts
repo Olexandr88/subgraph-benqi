@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class PriceOracle2 extends ethereum.SmartContract {
@@ -64,7 +64,7 @@ export class PriceOracle2 extends ethereum.SmartContract {
     let result = super.call(
       "makerUsdOracleKey",
       "makerUsdOracleKey():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -74,7 +74,7 @@ export class PriceOracle2 extends ethereum.SmartContract {
     let result = super.tryCall(
       "makerUsdOracleKey",
       "makerUsdOracleKey():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -102,7 +102,7 @@ export class PriceOracle2 extends ethereum.SmartContract {
     let result = super.call(
       "getUnderlyingPrice",
       "getUnderlyingPrice(address):(uint256)",
-      [ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(cToken)],
     );
 
     return result[0].toBigInt();
@@ -112,7 +112,7 @@ export class PriceOracle2 extends ethereum.SmartContract {
     let result = super.tryCall(
       "getUnderlyingPrice",
       "getUnderlyingPrice(address):(uint256)",
-      [ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(cToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -131,7 +131,7 @@ export class PriceOracle2 extends ethereum.SmartContract {
     let result = super.tryCall(
       "v1PriceOracle",
       "v1PriceOracle():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
