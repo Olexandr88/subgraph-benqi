@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class AccrueInterest extends ethereum.Event {
@@ -495,6 +495,22 @@ export class CToken__getAccountSnapshotResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): BigInt {
+    return this.value2;
+  }
+
+  getValue3(): BigInt {
+    return this.value3;
+  }
 }
 
 export class CToken extends ethereum.SmartContract {
@@ -519,7 +535,7 @@ export class CToken extends ethereum.SmartContract {
 
   _addReserves(addAmount: BigInt): BigInt {
     let result = super.call("_addReserves", "_addReserves(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(addAmount)
+      ethereum.Value.fromUnsignedBigInt(addAmount),
     ]);
 
     return result[0].toBigInt();
@@ -529,7 +545,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "_addReserves",
       "_addReserves(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(addAmount)]
+      [ethereum.Value.fromUnsignedBigInt(addAmount)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -542,7 +558,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_reduceReserves",
       "_reduceReserves(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(reduceAmount)]
+      [ethereum.Value.fromUnsignedBigInt(reduceAmount)],
     );
 
     return result[0].toBigInt();
@@ -552,7 +568,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "_reduceReserves",
       "_reduceReserves(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(reduceAmount)]
+      [ethereum.Value.fromUnsignedBigInt(reduceAmount)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -565,7 +581,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_setComptroller",
       "_setComptroller(address):(uint256)",
-      [ethereum.Value.fromAddress(newComptroller)]
+      [ethereum.Value.fromAddress(newComptroller)],
     );
 
     return result[0].toBigInt();
@@ -575,7 +591,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setComptroller",
       "_setComptroller(address):(uint256)",
-      [ethereum.Value.fromAddress(newComptroller)]
+      [ethereum.Value.fromAddress(newComptroller)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -588,19 +604,19 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_setInterestRateModel",
       "_setInterestRateModel(address):(uint256)",
-      [ethereum.Value.fromAddress(newInterestRateModel)]
+      [ethereum.Value.fromAddress(newInterestRateModel)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setInterestRateModel(
-    newInterestRateModel: Address
+    newInterestRateModel: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setInterestRateModel",
       "_setInterestRateModel(address):(uint256)",
-      [ethereum.Value.fromAddress(newInterestRateModel)]
+      [ethereum.Value.fromAddress(newInterestRateModel)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -613,7 +629,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_setPendingAdmin",
       "_setPendingAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAdmin)]
+      [ethereum.Value.fromAddress(newPendingAdmin)],
     );
 
     return result[0].toBigInt();
@@ -623,7 +639,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setPendingAdmin",
       "_setPendingAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAdmin)]
+      [ethereum.Value.fromAddress(newPendingAdmin)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -636,19 +652,19 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_setProtocolSeizeShare",
       "_setProtocolSeizeShare(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newProtocolSeizeShareMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newProtocolSeizeShareMantissa)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setProtocolSeizeShare(
-    newProtocolSeizeShareMantissa: BigInt
+    newProtocolSeizeShareMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setProtocolSeizeShare",
       "_setProtocolSeizeShare(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newProtocolSeizeShareMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newProtocolSeizeShareMantissa)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -661,19 +677,19 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "_setReserveFactor",
       "_setReserveFactor(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newReserveFactorMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newReserveFactorMantissa)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setReserveFactor(
-    newReserveFactorMantissa: BigInt
+    newReserveFactorMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setReserveFactor",
       "_setReserveFactor(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newReserveFactorMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newReserveFactorMantissa)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -686,7 +702,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "accrualBlockTimestamp",
       "accrualBlockTimestamp():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -696,7 +712,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "accrualBlockTimestamp",
       "accrualBlockTimestamp():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -715,7 +731,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "accrueInterest",
       "accrueInterest():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -743,7 +759,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "allowance",
       "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
+      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)],
     );
 
     return result[0].toBigInt();
@@ -753,7 +769,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "allowance",
       "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
+      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -765,7 +781,7 @@ export class CToken extends ethereum.SmartContract {
   approve(spender: Address, amount: BigInt): boolean {
     let result = super.call("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(amount),
     ]);
 
     return result[0].toBoolean();
@@ -774,7 +790,7 @@ export class CToken extends ethereum.SmartContract {
   try_approve(spender: Address, amount: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(amount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -785,7 +801,7 @@ export class CToken extends ethereum.SmartContract {
 
   balanceOf(owner: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(owner)
+      ethereum.Value.fromAddress(owner),
     ]);
 
     return result[0].toBigInt();
@@ -793,7 +809,7 @@ export class CToken extends ethereum.SmartContract {
 
   try_balanceOf(owner: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(owner)
+      ethereum.Value.fromAddress(owner),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -806,7 +822,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "balanceOfUnderlying",
       "balanceOfUnderlying(address):(uint256)",
-      [ethereum.Value.fromAddress(owner)]
+      [ethereum.Value.fromAddress(owner)],
     );
 
     return result[0].toBigInt();
@@ -816,7 +832,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "balanceOfUnderlying",
       "balanceOfUnderlying(address):(uint256)",
-      [ethereum.Value.fromAddress(owner)]
+      [ethereum.Value.fromAddress(owner)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -827,7 +843,7 @@ export class CToken extends ethereum.SmartContract {
 
   borrow(borrowAmount: BigInt): BigInt {
     let result = super.call("borrow", "borrow(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(borrowAmount)
+      ethereum.Value.fromUnsignedBigInt(borrowAmount),
     ]);
 
     return result[0].toBigInt();
@@ -835,7 +851,7 @@ export class CToken extends ethereum.SmartContract {
 
   try_borrow(borrowAmount: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("borrow", "borrow(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(borrowAmount)
+      ethereum.Value.fromUnsignedBigInt(borrowAmount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -848,7 +864,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "borrowBalanceCurrent",
       "borrowBalanceCurrent(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
 
     return result[0].toBigInt();
@@ -858,7 +874,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "borrowBalanceCurrent",
       "borrowBalanceCurrent(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -871,7 +887,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "borrowBalanceStored",
       "borrowBalanceStored(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
 
     return result[0].toBigInt();
@@ -881,7 +897,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "borrowBalanceStored",
       "borrowBalanceStored(address):(uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -909,7 +925,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "borrowRatePerTimestamp",
       "borrowRatePerTimestamp():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -919,7 +935,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "borrowRatePerTimestamp",
       "borrowRatePerTimestamp():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -962,7 +978,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "delegateToImplementation",
       "delegateToImplementation(bytes):(bytes)",
-      [ethereum.Value.fromBytes(data)]
+      [ethereum.Value.fromBytes(data)],
     );
 
     return result[0].toBytes();
@@ -972,7 +988,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "delegateToImplementation",
       "delegateToImplementation(bytes):(bytes)",
-      [ethereum.Value.fromBytes(data)]
+      [ethereum.Value.fromBytes(data)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -985,7 +1001,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "delegateToViewImplementation",
       "delegateToViewImplementation(bytes):(bytes)",
-      [ethereum.Value.fromBytes(data)]
+      [ethereum.Value.fromBytes(data)],
     );
 
     return result[0].toBytes();
@@ -995,7 +1011,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "delegateToViewImplementation",
       "delegateToViewImplementation(bytes):(bytes)",
-      [ethereum.Value.fromBytes(data)]
+      [ethereum.Value.fromBytes(data)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1008,7 +1024,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "exchangeRateCurrent",
       "exchangeRateCurrent():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1018,7 +1034,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "exchangeRateCurrent",
       "exchangeRateCurrent():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1031,7 +1047,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "exchangeRateStored",
       "exchangeRateStored():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1041,7 +1057,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "exchangeRateStored",
       "exchangeRateStored():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1054,24 +1070,24 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "getAccountSnapshot",
       "getAccountSnapshot(address):(uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
 
     return new CToken__getAccountSnapshotResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
-      result[3].toBigInt()
+      result[3].toBigInt(),
     );
   }
 
   try_getAccountSnapshot(
-    account: Address
+    account: Address,
   ): ethereum.CallResult<CToken__getAccountSnapshotResult> {
     let result = super.tryCall(
       "getAccountSnapshot",
       "getAccountSnapshot(address):(uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1082,8 +1098,8 @@ export class CToken extends ethereum.SmartContract {
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
-        value[3].toBigInt()
-      )
+        value[3].toBigInt(),
+      ),
     );
   }
 
@@ -1112,7 +1128,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "implementation",
       "implementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1125,7 +1141,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "interestRateModel",
       "interestRateModel():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1135,7 +1151,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "interestRateModel",
       "interestRateModel():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1162,7 +1178,7 @@ export class CToken extends ethereum.SmartContract {
   liquidateBorrow(
     borrower: Address,
     repayAmount: BigInt,
-    qiTokenCollateral: Address
+    qiTokenCollateral: Address,
   ): BigInt {
     let result = super.call(
       "liquidateBorrow",
@@ -1170,8 +1186,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(borrower),
         ethereum.Value.fromUnsignedBigInt(repayAmount),
-        ethereum.Value.fromAddress(qiTokenCollateral)
-      ]
+        ethereum.Value.fromAddress(qiTokenCollateral),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1180,7 +1196,7 @@ export class CToken extends ethereum.SmartContract {
   try_liquidateBorrow(
     borrower: Address,
     repayAmount: BigInt,
-    qiTokenCollateral: Address
+    qiTokenCollateral: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "liquidateBorrow",
@@ -1188,8 +1204,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(borrower),
         ethereum.Value.fromUnsignedBigInt(repayAmount),
-        ethereum.Value.fromAddress(qiTokenCollateral)
-      ]
+        ethereum.Value.fromAddress(qiTokenCollateral),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1200,7 +1216,7 @@ export class CToken extends ethereum.SmartContract {
 
   mint(mintAmount: BigInt): BigInt {
     let result = super.call("mint", "mint(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(mintAmount)
+      ethereum.Value.fromUnsignedBigInt(mintAmount),
     ]);
 
     return result[0].toBigInt();
@@ -1208,7 +1224,7 @@ export class CToken extends ethereum.SmartContract {
 
   try_mint(mintAmount: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("mint", "mint(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(mintAmount)
+      ethereum.Value.fromUnsignedBigInt(mintAmount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1251,7 +1267,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "protocolSeizeShareMantissa",
       "protocolSeizeShareMantissa():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1261,7 +1277,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "protocolSeizeShareMantissa",
       "protocolSeizeShareMantissa():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1272,7 +1288,7 @@ export class CToken extends ethereum.SmartContract {
 
   redeem(redeemTokens: BigInt): BigInt {
     let result = super.call("redeem", "redeem(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(redeemTokens)
+      ethereum.Value.fromUnsignedBigInt(redeemTokens),
     ]);
 
     return result[0].toBigInt();
@@ -1280,7 +1296,7 @@ export class CToken extends ethereum.SmartContract {
 
   try_redeem(redeemTokens: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("redeem", "redeem(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(redeemTokens)
+      ethereum.Value.fromUnsignedBigInt(redeemTokens),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1293,7 +1309,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "redeemUnderlying",
       "redeemUnderlying(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(redeemAmount)]
+      [ethereum.Value.fromUnsignedBigInt(redeemAmount)],
     );
 
     return result[0].toBigInt();
@@ -1303,7 +1319,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "redeemUnderlying",
       "redeemUnderlying(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(redeemAmount)]
+      [ethereum.Value.fromUnsignedBigInt(redeemAmount)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1314,7 +1330,7 @@ export class CToken extends ethereum.SmartContract {
 
   repayBorrow(repayAmount: BigInt): BigInt {
     let result = super.call("repayBorrow", "repayBorrow(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(repayAmount)
+      ethereum.Value.fromUnsignedBigInt(repayAmount),
     ]);
 
     return result[0].toBigInt();
@@ -1324,7 +1340,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "repayBorrow",
       "repayBorrow(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(repayAmount)]
+      [ethereum.Value.fromUnsignedBigInt(repayAmount)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1339,8 +1355,8 @@ export class CToken extends ethereum.SmartContract {
       "repayBorrowBehalf(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1348,15 +1364,15 @@ export class CToken extends ethereum.SmartContract {
 
   try_repayBorrowBehalf(
     borrower: Address,
-    repayAmount: BigInt
+    repayAmount: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "repayBorrowBehalf",
       "repayBorrowBehalf(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1369,7 +1385,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "reserveFactorMantissa",
       "reserveFactorMantissa():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1379,7 +1395,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "reserveFactorMantissa",
       "reserveFactorMantissa():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1395,8 +1411,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(seizeTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(seizeTokens),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1405,7 +1421,7 @@ export class CToken extends ethereum.SmartContract {
   try_seize(
     liquidator: Address,
     borrower: Address,
-    seizeTokens: BigInt
+    seizeTokens: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "seize",
@@ -1413,8 +1429,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(seizeTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(seizeTokens),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1427,7 +1443,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "supplyRatePerTimestamp",
       "supplyRatePerTimestamp():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1437,7 +1453,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "supplyRatePerTimestamp",
       "supplyRatePerTimestamp():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1480,7 +1496,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.call(
       "totalBorrowsCurrent",
       "totalBorrowsCurrent():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1490,7 +1506,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "totalBorrowsCurrent",
       "totalBorrowsCurrent():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1509,7 +1525,7 @@ export class CToken extends ethereum.SmartContract {
     let result = super.tryCall(
       "totalReserves",
       "totalReserves():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1536,7 +1552,7 @@ export class CToken extends ethereum.SmartContract {
   transfer(dst: Address, amount: BigInt): boolean {
     let result = super.call("transfer", "transfer(address,uint256):(bool)", [
       ethereum.Value.fromAddress(dst),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(amount),
     ]);
 
     return result[0].toBoolean();
@@ -1545,7 +1561,7 @@ export class CToken extends ethereum.SmartContract {
   try_transfer(dst: Address, amount: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("transfer", "transfer(address,uint256):(bool)", [
       ethereum.Value.fromAddress(dst),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(amount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1561,8 +1577,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(src),
         ethereum.Value.fromAddress(dst),
-        ethereum.Value.fromUnsignedBigInt(amount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(amount),
+      ],
     );
 
     return result[0].toBoolean();
@@ -1571,7 +1587,7 @@ export class CToken extends ethereum.SmartContract {
   try_transferFrom(
     src: Address,
     dst: Address,
-    amount: BigInt
+    amount: BigInt,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "transferFrom",
@@ -1579,8 +1595,8 @@ export class CToken extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(src),
         ethereum.Value.fromAddress(dst),
-        ethereum.Value.fromUnsignedBigInt(amount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(amount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

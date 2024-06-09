@@ -323,7 +323,7 @@ export function handleLiquidateBorrow(event: LiquidateBorrow): void {
   liquidation.blockTime = event.block.timestamp.toI32();
   liquidation.underlyingSymbol = marketRepayToken.underlyingSymbol;
   liquidation.underlyingRepayAmount = underlyingRepayAmount;
-  liquidation.cTokenSymbol = marketCTokenLiquidated.symbol;
+  liquidation.cTokenSymbol = marketCTokenLiquidated!.symbol;
   liquidation.save();
 }
 
@@ -346,7 +346,7 @@ export function handleTransfer(event: Transfer): void {
   // We only updateMarket() if accrual block number is not up to date. This will only happen
   // with normal transfers, since mint, redeem, and seize transfers will already run updateMarket()
   let marketID = event.address.toHexString();
-  let market = Market.load(marketID);
+  let market = Market.load(marketID)!;
   if (market.accrualBlockNumber != event.block.number.toI32()) {
     market = updateMarket(event.address, event.block.number.toI32(), event.block.timestamp.toI32());
   }
@@ -441,7 +441,7 @@ export function handleAccrueInterest(event: AccrueInterest): void {
 
 export function handleNewReserveFactor(event: NewReserveFactor): void {
   let marketID = event.address.toHex();
-  let market = Market.load(marketID);
+  let market = Market.load(marketID)!;
   market.reserveFactor = event.params.newReserveFactorMantissa.toBigDecimal();
   market.save();
 }

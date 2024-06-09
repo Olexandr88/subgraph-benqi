@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class OracleFailure extends ethereum.Event {
@@ -237,6 +237,14 @@ export class PriceOracle__anchorsResult {
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
   }
+
+  getPeriod(): BigInt {
+    return this.value0;
+  }
+
+  getPriceMantissa(): BigInt {
+    return this.value1;
+  }
 }
 
 export class PriceOracle extends ethereum.SmartContract {
@@ -263,7 +271,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "maxSwingMantissa",
       "maxSwingMantissa():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -273,7 +281,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "maxSwingMantissa",
       "maxSwingMantissa():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -284,7 +292,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   _assetPrices(param0: Address): BigInt {
     let result = super.call("_assetPrices", "_assetPrices(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -294,7 +302,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "_assetPrices",
       "_assetPrices(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -307,7 +315,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "pendingAnchorAdmin",
       "pendingAnchorAdmin():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -317,7 +325,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "pendingAnchorAdmin",
       "pendingAnchorAdmin():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -330,7 +338,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "numBlocksPerPeriod",
       "numBlocksPerPeriod():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -340,7 +348,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "numBlocksPerPeriod",
       "numBlocksPerPeriod():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -351,7 +359,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   readers(param0: Address): Address {
     let result = super.call("readers", "readers(address):(address)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toAddress();
@@ -359,7 +367,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try_readers(param0: Address): ethereum.CallResult<Address> {
     let result = super.tryCall("readers", "readers(address):(address)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -385,29 +393,29 @@ export class PriceOracle extends ethereum.SmartContract {
 
   anchors(param0: Address): PriceOracle__anchorsResult {
     let result = super.call("anchors", "anchors(address):(uint256,uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return new PriceOracle__anchorsResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_anchors(
-    param0: Address
+    param0: Address,
   ): ethereum.CallResult<PriceOracle__anchorsResult> {
     let result = super.tryCall(
       "anchors",
       "anchors(address):(uint256,uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new PriceOracle__anchorsResult(value[0].toBigInt(), value[1].toBigInt())
+      new PriceOracle__anchorsResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -430,7 +438,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "pendingAnchors",
       "pendingAnchors(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -440,7 +448,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "pendingAnchors",
       "pendingAnchors(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -470,8 +478,8 @@ export class PriceOracle extends ethereum.SmartContract {
       "_setPendingAnchor(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(asset),
-        ethereum.Value.fromUnsignedBigInt(newScaledPrice)
-      ]
+        ethereum.Value.fromUnsignedBigInt(newScaledPrice),
+      ],
     );
 
     return result[0].toBigInt();
@@ -479,15 +487,15 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try__setPendingAnchor(
     asset: Address,
-    newScaledPrice: BigInt
+    newScaledPrice: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setPendingAnchor",
       "_setPendingAnchor(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(asset),
-        ethereum.Value.fromUnsignedBigInt(newScaledPrice)
-      ]
+        ethereum.Value.fromUnsignedBigInt(newScaledPrice),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -498,7 +506,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   _setPaused(requestedState: boolean): BigInt {
     let result = super.call("_setPaused", "_setPaused(bool):(uint256)", [
-      ethereum.Value.fromBoolean(requestedState)
+      ethereum.Value.fromBoolean(requestedState),
     ]);
 
     return result[0].toBigInt();
@@ -506,7 +514,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try__setPaused(requestedState: boolean): ethereum.CallResult<BigInt> {
     let result = super.tryCall("_setPaused", "_setPaused(bool):(uint256)", [
-      ethereum.Value.fromBoolean(requestedState)
+      ethereum.Value.fromBoolean(requestedState),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -519,19 +527,19 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "_setPendingAnchorAdmin",
       "_setPendingAnchorAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAnchorAdmin)]
+      [ethereum.Value.fromAddress(newPendingAnchorAdmin)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setPendingAnchorAdmin(
-    newPendingAnchorAdmin: Address
+    newPendingAnchorAdmin: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setPendingAnchorAdmin",
       "_setPendingAnchorAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAnchorAdmin)]
+      [ethereum.Value.fromAddress(newPendingAnchorAdmin)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -544,7 +552,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.call(
       "_acceptAnchorAdmin",
       "_acceptAnchorAdmin():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -554,7 +562,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "_acceptAnchorAdmin",
       "_acceptAnchorAdmin():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -565,7 +573,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   assetPrices(asset: Address): BigInt {
     let result = super.call("assetPrices", "assetPrices(address):(uint256)", [
-      ethereum.Value.fromAddress(asset)
+      ethereum.Value.fromAddress(asset),
     ]);
 
     return result[0].toBigInt();
@@ -575,7 +583,7 @@ export class PriceOracle extends ethereum.SmartContract {
     let result = super.tryCall(
       "assetPrices",
       "assetPrices(address):(uint256)",
-      [ethereum.Value.fromAddress(asset)]
+      [ethereum.Value.fromAddress(asset)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -586,7 +594,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   getPrice(asset: Address): BigInt {
     let result = super.call("getPrice", "getPrice(address):(uint256)", [
-      ethereum.Value.fromAddress(asset)
+      ethereum.Value.fromAddress(asset),
     ]);
 
     return result[0].toBigInt();
@@ -594,7 +602,7 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try_getPrice(asset: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("getPrice", "getPrice(address):(uint256)", [
-      ethereum.Value.fromAddress(asset)
+      ethereum.Value.fromAddress(asset),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -606,7 +614,7 @@ export class PriceOracle extends ethereum.SmartContract {
   setPrice(asset: Address, requestedPriceMantissa: BigInt): BigInt {
     let result = super.call("setPrice", "setPrice(address,uint256):(uint256)", [
       ethereum.Value.fromAddress(asset),
-      ethereum.Value.fromUnsignedBigInt(requestedPriceMantissa)
+      ethereum.Value.fromUnsignedBigInt(requestedPriceMantissa),
     ]);
 
     return result[0].toBigInt();
@@ -614,15 +622,15 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try_setPrice(
     asset: Address,
-    requestedPriceMantissa: BigInt
+    requestedPriceMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "setPrice",
       "setPrice(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(asset),
-        ethereum.Value.fromUnsignedBigInt(requestedPriceMantissa)
-      ]
+        ethereum.Value.fromUnsignedBigInt(requestedPriceMantissa),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -633,15 +641,15 @@ export class PriceOracle extends ethereum.SmartContract {
 
   setPrices(
     assets: Array<Address>,
-    requestedPriceMantissas: Array<BigInt>
+    requestedPriceMantissas: Array<BigInt>,
   ): Array<BigInt> {
     let result = super.call(
       "setPrices",
       "setPrices(address[],uint256[]):(uint256[])",
       [
         ethereum.Value.fromAddressArray(assets),
-        ethereum.Value.fromUnsignedBigIntArray(requestedPriceMantissas)
-      ]
+        ethereum.Value.fromUnsignedBigIntArray(requestedPriceMantissas),
+      ],
     );
 
     return result[0].toBigIntArray();
@@ -649,15 +657,15 @@ export class PriceOracle extends ethereum.SmartContract {
 
   try_setPrices(
     assets: Array<Address>,
-    requestedPriceMantissas: Array<BigInt>
+    requestedPriceMantissas: Array<BigInt>,
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "setPrices",
       "setPrices(address[],uint256[]):(uint256[])",
       [
         ethereum.Value.fromAddressArray(assets),
-        ethereum.Value.fromUnsignedBigIntArray(requestedPriceMantissas)
-      ]
+        ethereum.Value.fromUnsignedBigIntArray(requestedPriceMantissas),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

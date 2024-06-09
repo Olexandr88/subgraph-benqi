@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class NewPendingImplementation extends ethereum.Event {
@@ -559,6 +559,14 @@ export class Comptroller__compBorrowStateResult {
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
   }
+
+  getIndex(): BigInt {
+    return this.value0;
+  }
+
+  getBlock(): BigInt {
+    return this.value1;
+  }
 }
 
 export class Comptroller__compSupplyStateResult {
@@ -575,6 +583,14 @@ export class Comptroller__compSupplyStateResult {
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
+  }
+
+  getIndex(): BigInt {
+    return this.value0;
+  }
+
+  getBlock(): BigInt {
+    return this.value1;
   }
 }
 
@@ -596,6 +612,18 @@ export class Comptroller__getAccountLiquidityResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): BigInt {
+    return this.value2;
+  }
 }
 
 export class Comptroller__getHypotheticalAccountLiquidityResult {
@@ -616,6 +644,18 @@ export class Comptroller__getHypotheticalAccountLiquidityResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): BigInt {
+    return this.value2;
+  }
 }
 
 export class Comptroller__liquidateCalculateSeizeTokensResult {
@@ -632,6 +672,14 @@ export class Comptroller__liquidateCalculateSeizeTokensResult {
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
+  }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
   }
 }
 
@@ -652,6 +700,18 @@ export class Comptroller__marketsResult {
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set("value2", ethereum.Value.fromBoolean(this.value2));
     return map;
+  }
+
+  getIsListed(): boolean {
+    return this.value0;
+  }
+
+  getCollateralFactorMantissa(): BigInt {
+    return this.value1;
+  }
+
+  getIsComped(): boolean {
+    return this.value2;
   }
 }
 
@@ -679,7 +739,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setPendingAdmin",
       "_setPendingAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAdmin)]
+      [ethereum.Value.fromAddress(newPendingAdmin)],
     );
 
     return result[0].toBigInt();
@@ -689,7 +749,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setPendingAdmin",
       "_setPendingAdmin(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingAdmin)]
+      [ethereum.Value.fromAddress(newPendingAdmin)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -702,7 +762,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "comptrollerImplementation",
       "comptrollerImplementation():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -712,7 +772,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "comptrollerImplementation",
       "comptrollerImplementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -725,7 +785,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_acceptImplementation",
       "_acceptImplementation():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -735,7 +795,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_acceptImplementation",
       "_acceptImplementation():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -748,7 +808,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "pendingComptrollerImplementation",
       "pendingComptrollerImplementation():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -758,7 +818,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "pendingComptrollerImplementation",
       "pendingComptrollerImplementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -771,19 +831,19 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setPendingImplementation",
       "_setPendingImplementation(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingImplementation)]
+      [ethereum.Value.fromAddress(newPendingImplementation)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setPendingImplementation(
-    newPendingImplementation: Address
+    newPendingImplementation: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setPendingImplementation",
       "_setPendingImplementation(address):(uint256)",
-      [ethereum.Value.fromAddress(newPendingImplementation)]
+      [ethereum.Value.fromAddress(newPendingImplementation)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -826,7 +886,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_borrowGuardianPaused",
       "_borrowGuardianPaused():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -836,7 +896,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_borrowGuardianPaused",
       "_borrowGuardianPaused():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -849,7 +909,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_mintGuardianPaused",
       "_mintGuardianPaused():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -859,7 +919,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_mintGuardianPaused",
       "_mintGuardianPaused():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -872,7 +932,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setBorrowPaused",
       "_setBorrowPaused(address,bool):(bool)",
-      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)],
     );
 
     return result[0].toBoolean();
@@ -880,12 +940,12 @@ export class Comptroller extends ethereum.SmartContract {
 
   try__setBorrowPaused(
     cToken: Address,
-    state: boolean
+    state: boolean,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "_setBorrowPaused",
       "_setBorrowPaused(address,bool):(bool)",
-      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -898,19 +958,19 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setCloseFactor",
       "_setCloseFactor(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newCloseFactorMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newCloseFactorMantissa)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setCloseFactor(
-    newCloseFactorMantissa: BigInt
+    newCloseFactorMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setCloseFactor",
       "_setCloseFactor(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newCloseFactorMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newCloseFactorMantissa)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -921,15 +981,15 @@ export class Comptroller extends ethereum.SmartContract {
 
   _setCollateralFactor(
     cToken: Address,
-    newCollateralFactorMantissa: BigInt
+    newCollateralFactorMantissa: BigInt,
   ): BigInt {
     let result = super.call(
       "_setCollateralFactor",
       "_setCollateralFactor(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(cToken),
-        ethereum.Value.fromUnsignedBigInt(newCollateralFactorMantissa)
-      ]
+        ethereum.Value.fromUnsignedBigInt(newCollateralFactorMantissa),
+      ],
     );
 
     return result[0].toBigInt();
@@ -937,15 +997,15 @@ export class Comptroller extends ethereum.SmartContract {
 
   try__setCollateralFactor(
     cToken: Address,
-    newCollateralFactorMantissa: BigInt
+    newCollateralFactorMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setCollateralFactor",
       "_setCollateralFactor(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(cToken),
-        ethereum.Value.fromUnsignedBigInt(newCollateralFactorMantissa)
-      ]
+        ethereum.Value.fromUnsignedBigInt(newCollateralFactorMantissa),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -958,19 +1018,19 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setLiquidationIncentive",
       "_setLiquidationIncentive(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newLiquidationIncentiveMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newLiquidationIncentiveMantissa)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setLiquidationIncentive(
-    newLiquidationIncentiveMantissa: BigInt
+    newLiquidationIncentiveMantissa: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setLiquidationIncentive",
       "_setLiquidationIncentive(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(newLiquidationIncentiveMantissa)]
+      [ethereum.Value.fromUnsignedBigInt(newLiquidationIncentiveMantissa)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -983,7 +1043,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setMintPaused",
       "_setMintPaused(address,bool):(bool)",
-      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)],
     );
 
     return result[0].toBoolean();
@@ -991,12 +1051,12 @@ export class Comptroller extends ethereum.SmartContract {
 
   try__setMintPaused(
     cToken: Address,
-    state: boolean
+    state: boolean,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "_setMintPaused",
       "_setMintPaused(address,bool):(bool)",
-      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromAddress(cToken), ethereum.Value.fromBoolean(state)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1009,19 +1069,19 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setPauseGuardian",
       "_setPauseGuardian(address):(uint256)",
-      [ethereum.Value.fromAddress(newPauseGuardian)]
+      [ethereum.Value.fromAddress(newPauseGuardian)],
     );
 
     return result[0].toBigInt();
   }
 
   try__setPauseGuardian(
-    newPauseGuardian: Address
+    newPauseGuardian: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "_setPauseGuardian",
       "_setPauseGuardian(address):(uint256)",
-      [ethereum.Value.fromAddress(newPauseGuardian)]
+      [ethereum.Value.fromAddress(newPauseGuardian)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1034,7 +1094,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setPriceOracle",
       "_setPriceOracle(address):(uint256)",
-      [ethereum.Value.fromAddress(newOracle)]
+      [ethereum.Value.fromAddress(newOracle)],
     );
 
     return result[0].toBigInt();
@@ -1044,7 +1104,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setPriceOracle",
       "_setPriceOracle(address):(uint256)",
-      [ethereum.Value.fromAddress(newOracle)]
+      [ethereum.Value.fromAddress(newOracle)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1055,7 +1115,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   _setSeizePaused(state: boolean): boolean {
     let result = super.call("_setSeizePaused", "_setSeizePaused(bool):(bool)", [
-      ethereum.Value.fromBoolean(state)
+      ethereum.Value.fromBoolean(state),
     ]);
 
     return result[0].toBoolean();
@@ -1065,7 +1125,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setSeizePaused",
       "_setSeizePaused(bool):(bool)",
-      [ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromBoolean(state)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1078,7 +1138,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_setTransferPaused",
       "_setTransferPaused(bool):(bool)",
-      [ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromBoolean(state)],
     );
 
     return result[0].toBoolean();
@@ -1088,7 +1148,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_setTransferPaused",
       "_setTransferPaused(bool):(bool)",
-      [ethereum.Value.fromBoolean(state)]
+      [ethereum.Value.fromBoolean(state)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1101,7 +1161,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "_supportMarket",
       "_supportMarket(address):(uint256)",
-      [ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(cToken)],
     );
 
     return result[0].toBigInt();
@@ -1111,7 +1171,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "_supportMarket",
       "_supportMarket(address):(uint256)",
-      [ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(cToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1126,8 +1186,8 @@ export class Comptroller extends ethereum.SmartContract {
       "accountAssets(address,uint256):(address)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
 
     return result[0].toAddress();
@@ -1135,15 +1195,15 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_accountAssets(
     param0: Address,
-    param1: BigInt
+    param1: BigInt,
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "accountAssets",
       "accountAssets(address,uint256):(address)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1169,7 +1229,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   allMarkets(param0: BigInt): Address {
     let result = super.call("allMarkets", "allMarkets(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
+      ethereum.Value.fromUnsignedBigInt(param0),
     ]);
 
     return result[0].toAddress();
@@ -1177,7 +1237,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_allMarkets(param0: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall("allMarkets", "allMarkets(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
+      ethereum.Value.fromUnsignedBigInt(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1189,7 +1249,7 @@ export class Comptroller extends ethereum.SmartContract {
   borrowAllowed(
     cToken: Address,
     borrower: Address,
-    borrowAmount: BigInt
+    borrowAmount: BigInt,
   ): BigInt {
     let result = super.call(
       "borrowAllowed",
@@ -1197,8 +1257,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(borrowAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(borrowAmount),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1207,7 +1267,7 @@ export class Comptroller extends ethereum.SmartContract {
   try_borrowAllowed(
     cToken: Address,
     borrower: Address,
-    borrowAmount: BigInt
+    borrowAmount: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "borrowAllowed",
@@ -1215,8 +1275,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(borrowAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(borrowAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1229,7 +1289,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "borrowCapGuardian",
       "borrowCapGuardian():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1239,7 +1299,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "borrowCapGuardian",
       "borrowCapGuardian():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1250,7 +1310,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   borrowCaps(param0: Address): BigInt {
     let result = super.call("borrowCaps", "borrowCaps(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -1258,7 +1318,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_borrowCaps(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("borrowCaps", "borrowCaps(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1271,7 +1331,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "borrowGuardianPaused",
       "borrowGuardianPaused(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBoolean();
@@ -1281,7 +1341,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "borrowGuardianPaused",
       "borrowGuardianPaused(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1294,7 +1354,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "checkMembership",
       "checkMembership(address,address):(bool)",
-      [ethereum.Value.fromAddress(account), ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(account), ethereum.Value.fromAddress(cToken)],
     );
 
     return result[0].toBoolean();
@@ -1302,12 +1362,12 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_checkMembership(
     account: Address,
-    cToken: Address
+    cToken: Address,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "checkMembership",
       "checkMembership(address,address):(bool)",
-      [ethereum.Value.fromAddress(account), ethereum.Value.fromAddress(cToken)]
+      [ethereum.Value.fromAddress(account), ethereum.Value.fromAddress(cToken)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1320,7 +1380,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "closeFactorMantissa",
       "closeFactorMantissa():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1330,7 +1390,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "closeFactorMantissa",
       "closeFactorMantissa():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1341,7 +1401,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   compAccrued(param0: Address): BigInt {
     let result = super.call("compAccrued", "compAccrued(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -1351,7 +1411,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "compAccrued",
       "compAccrued(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1364,22 +1424,22 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compBorrowState",
       "compBorrowState(address):(uint224,uint32)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return new Comptroller__compBorrowStateResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_compBorrowState(
-    param0: Address
+    param0: Address,
   ): ethereum.CallResult<Comptroller__compBorrowStateResult> {
     let result = super.tryCall(
       "compBorrowState",
       "compBorrowState(address):(uint224,uint32)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1388,8 +1448,8 @@ export class Comptroller extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new Comptroller__compBorrowStateResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1397,7 +1457,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compBorrowerIndex",
       "compBorrowerIndex(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
 
     return result[0].toBigInt();
@@ -1405,12 +1465,12 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_compBorrowerIndex(
     param0: Address,
-    param1: Address
+    param1: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "compBorrowerIndex",
       "compBorrowerIndex(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1423,7 +1483,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compContributorSpeeds",
       "compContributorSpeeds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -1433,7 +1493,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "compContributorSpeeds",
       "compContributorSpeeds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1446,7 +1506,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compInitialIndex",
       "compInitialIndex():(uint224)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1456,7 +1516,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "compInitialIndex",
       "compInitialIndex():(uint224)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1482,7 +1542,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   compSpeeds(param0: Address): BigInt {
     let result = super.call("compSpeeds", "compSpeeds(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -1490,7 +1550,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_compSpeeds(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("compSpeeds", "compSpeeds(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1503,7 +1563,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compSupplierIndex",
       "compSupplierIndex(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
 
     return result[0].toBigInt();
@@ -1511,12 +1571,12 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_compSupplierIndex(
     param0: Address,
-    param1: Address
+    param1: Address,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "compSupplierIndex",
       "compSupplierIndex(address,address):(uint256)",
-      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)]
+      [ethereum.Value.fromAddress(param0), ethereum.Value.fromAddress(param1)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1529,22 +1589,22 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "compSupplyState",
       "compSupplyState(address):(uint224,uint32)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return new Comptroller__compSupplyStateResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_compSupplyState(
-    param0: Address
+    param0: Address,
   ): ethereum.CallResult<Comptroller__compSupplyStateResult> {
     let result = super.tryCall(
       "compSupplyState",
       "compSupplyState(address):(uint224,uint32)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1553,8 +1613,8 @@ export class Comptroller extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new Comptroller__compSupplyStateResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1562,7 +1622,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "comptrollerImplementation",
       "comptrollerImplementation():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1572,7 +1632,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "comptrollerImplementation",
       "comptrollerImplementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1585,19 +1645,19 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "enterMarkets",
       "enterMarkets(address[]):(uint256[])",
-      [ethereum.Value.fromAddressArray(cTokens)]
+      [ethereum.Value.fromAddressArray(cTokens)],
     );
 
     return result[0].toBigIntArray();
   }
 
   try_enterMarkets(
-    cTokens: Array<Address>
+    cTokens: Array<Address>,
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "enterMarkets",
       "enterMarkets(address[]):(uint256[])",
-      [ethereum.Value.fromAddressArray(cTokens)]
+      [ethereum.Value.fromAddressArray(cTokens)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1608,7 +1668,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   exitMarket(cTokenAddress: Address): BigInt {
     let result = super.call("exitMarket", "exitMarket(address):(uint256)", [
-      ethereum.Value.fromAddress(cTokenAddress)
+      ethereum.Value.fromAddress(cTokenAddress),
     ]);
 
     return result[0].toBigInt();
@@ -1616,7 +1676,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_exitMarket(cTokenAddress: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("exitMarket", "exitMarket(address):(uint256)", [
-      ethereum.Value.fromAddress(cTokenAddress)
+      ethereum.Value.fromAddress(cTokenAddress),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1626,28 +1686,28 @@ export class Comptroller extends ethereum.SmartContract {
   }
 
   getAccountLiquidity(
-    account: Address
+    account: Address,
   ): Comptroller__getAccountLiquidityResult {
     let result = super.call(
       "getAccountLiquidity",
       "getAccountLiquidity(address):(uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
 
     return new Comptroller__getAccountLiquidityResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_getAccountLiquidity(
-    account: Address
+    account: Address,
   ): ethereum.CallResult<Comptroller__getAccountLiquidityResult> {
     let result = super.tryCall(
       "getAccountLiquidity",
       "getAccountLiquidity(address):(uint256,uint256,uint256)",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1657,8 +1717,8 @@ export class Comptroller extends ethereum.SmartContract {
       new Comptroller__getAccountLiquidityResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -1672,7 +1732,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "getAllMarkets",
       "getAllMarkets():(address[])",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1683,7 +1743,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   getAssetsIn(account: Address): Array<Address> {
     let result = super.call("getAssetsIn", "getAssetsIn(address):(address[])", [
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toAddressArray();
@@ -1693,7 +1753,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "getAssetsIn",
       "getAssetsIn(address):(address[])",
-      [ethereum.Value.fromAddress(account)]
+      [ethereum.Value.fromAddress(account)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1712,7 +1772,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "getBlockNumber",
       "getBlockNumber():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1731,7 +1791,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "getCompAddress",
       "getCompAddress():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1744,7 +1804,7 @@ export class Comptroller extends ethereum.SmartContract {
     account: Address,
     cTokenModify: Address,
     redeemTokens: BigInt,
-    borrowAmount: BigInt
+    borrowAmount: BigInt,
   ): Comptroller__getHypotheticalAccountLiquidityResult {
     let result = super.call(
       "getHypotheticalAccountLiquidity",
@@ -1753,14 +1813,14 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(account),
         ethereum.Value.fromAddress(cTokenModify),
         ethereum.Value.fromUnsignedBigInt(redeemTokens),
-        ethereum.Value.fromUnsignedBigInt(borrowAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(borrowAmount),
+      ],
     );
 
     return new Comptroller__getHypotheticalAccountLiquidityResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
@@ -1768,7 +1828,7 @@ export class Comptroller extends ethereum.SmartContract {
     account: Address,
     cTokenModify: Address,
     redeemTokens: BigInt,
-    borrowAmount: BigInt
+    borrowAmount: BigInt,
   ): ethereum.CallResult<Comptroller__getHypotheticalAccountLiquidityResult> {
     let result = super.tryCall(
       "getHypotheticalAccountLiquidity",
@@ -1777,8 +1837,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(account),
         ethereum.Value.fromAddress(cTokenModify),
         ethereum.Value.fromUnsignedBigInt(redeemTokens),
-        ethereum.Value.fromUnsignedBigInt(borrowAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(borrowAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1788,8 +1848,8 @@ export class Comptroller extends ethereum.SmartContract {
       new Comptroller__getHypotheticalAccountLiquidityResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -1810,7 +1870,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   isDeprecated(cToken: Address): boolean {
     let result = super.call("isDeprecated", "isDeprecated(address):(bool)", [
-      ethereum.Value.fromAddress(cToken)
+      ethereum.Value.fromAddress(cToken),
     ]);
 
     return result[0].toBoolean();
@@ -1818,7 +1878,7 @@ export class Comptroller extends ethereum.SmartContract {
 
   try_isDeprecated(cToken: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("isDeprecated", "isDeprecated(address):(bool)", [
-      ethereum.Value.fromAddress(cToken)
+      ethereum.Value.fromAddress(cToken),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1831,7 +1891,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "lastContributorBlock",
       "lastContributorBlock(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -1841,7 +1901,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "lastContributorBlock",
       "lastContributorBlock(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1855,7 +1915,7 @@ export class Comptroller extends ethereum.SmartContract {
     cTokenCollateral: Address,
     liquidator: Address,
     borrower: Address,
-    repayAmount: BigInt
+    repayAmount: BigInt,
   ): BigInt {
     let result = super.call(
       "liquidateBorrowAllowed",
@@ -1865,8 +1925,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cTokenCollateral),
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1877,7 +1937,7 @@ export class Comptroller extends ethereum.SmartContract {
     cTokenCollateral: Address,
     liquidator: Address,
     borrower: Address,
-    repayAmount: BigInt
+    repayAmount: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "liquidateBorrowAllowed",
@@ -1887,8 +1947,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cTokenCollateral),
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1900,7 +1960,7 @@ export class Comptroller extends ethereum.SmartContract {
   liquidateCalculateSeizeTokens(
     cTokenBorrowed: Address,
     cTokenCollateral: Address,
-    actualRepayAmount: BigInt
+    actualRepayAmount: BigInt,
   ): Comptroller__liquidateCalculateSeizeTokensResult {
     let result = super.call(
       "liquidateCalculateSeizeTokens",
@@ -1908,20 +1968,20 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cTokenBorrowed),
         ethereum.Value.fromAddress(cTokenCollateral),
-        ethereum.Value.fromUnsignedBigInt(actualRepayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(actualRepayAmount),
+      ],
     );
 
     return new Comptroller__liquidateCalculateSeizeTokensResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_liquidateCalculateSeizeTokens(
     cTokenBorrowed: Address,
     cTokenCollateral: Address,
-    actualRepayAmount: BigInt
+    actualRepayAmount: BigInt,
   ): ethereum.CallResult<Comptroller__liquidateCalculateSeizeTokensResult> {
     let result = super.tryCall(
       "liquidateCalculateSeizeTokens",
@@ -1929,8 +1989,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cTokenBorrowed),
         ethereum.Value.fromAddress(cTokenCollateral),
-        ethereum.Value.fromUnsignedBigInt(actualRepayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(actualRepayAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1939,8 +1999,8 @@ export class Comptroller extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new Comptroller__liquidateCalculateSeizeTokensResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1948,7 +2008,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "liquidationIncentiveMantissa",
       "liquidationIncentiveMantissa():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -1958,7 +2018,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "liquidationIncentiveMantissa",
       "liquidationIncentiveMantissa():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1969,23 +2029,23 @@ export class Comptroller extends ethereum.SmartContract {
 
   markets(param0: Address): Comptroller__marketsResult {
     let result = super.call("markets", "markets(address):(bool,uint256,bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return new Comptroller__marketsResult(
       result[0].toBoolean(),
       result[1].toBigInt(),
-      result[2].toBoolean()
+      result[2].toBoolean(),
     );
   }
 
   try_markets(
-    param0: Address
+    param0: Address,
   ): ethereum.CallResult<Comptroller__marketsResult> {
     let result = super.tryCall(
       "markets",
       "markets(address):(bool,uint256,bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1995,8 +2055,8 @@ export class Comptroller extends ethereum.SmartContract {
       new Comptroller__marketsResult(
         value[0].toBoolean(),
         value[1].toBigInt(),
-        value[2].toBoolean()
-      )
+        value[2].toBoolean(),
+      ),
     );
   }
 
@@ -2022,8 +2082,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(minter),
-        ethereum.Value.fromUnsignedBigInt(mintAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(mintAmount),
+      ],
     );
 
     return result[0].toBigInt();
@@ -2032,7 +2092,7 @@ export class Comptroller extends ethereum.SmartContract {
   try_mintAllowed(
     cToken: Address,
     minter: Address,
-    mintAmount: BigInt
+    mintAmount: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "mintAllowed",
@@ -2040,8 +2100,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(minter),
-        ethereum.Value.fromUnsignedBigInt(mintAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(mintAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2054,7 +2114,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "mintGuardianPaused",
       "mintGuardianPaused(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBoolean();
@@ -2064,7 +2124,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "mintGuardianPaused",
       "mintGuardianPaused(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2098,7 +2158,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "pauseGuardian",
       "pauseGuardian():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2126,7 +2186,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "pendingComptrollerImplementation",
       "pendingComptrollerImplementation():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -2136,7 +2196,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "pendingComptrollerImplementation",
       "pendingComptrollerImplementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2148,7 +2208,7 @@ export class Comptroller extends ethereum.SmartContract {
   redeemAllowed(
     cToken: Address,
     redeemer: Address,
-    redeemTokens: BigInt
+    redeemTokens: BigInt,
   ): BigInt {
     let result = super.call(
       "redeemAllowed",
@@ -2156,8 +2216,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(redeemer),
-        ethereum.Value.fromUnsignedBigInt(redeemTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(redeemTokens),
+      ],
     );
 
     return result[0].toBigInt();
@@ -2166,7 +2226,7 @@ export class Comptroller extends ethereum.SmartContract {
   try_redeemAllowed(
     cToken: Address,
     redeemer: Address,
-    redeemTokens: BigInt
+    redeemTokens: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "redeemAllowed",
@@ -2174,8 +2234,8 @@ export class Comptroller extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(redeemer),
-        ethereum.Value.fromUnsignedBigInt(redeemTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(redeemTokens),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2188,7 +2248,7 @@ export class Comptroller extends ethereum.SmartContract {
     cToken: Address,
     payer: Address,
     borrower: Address,
-    repayAmount: BigInt
+    repayAmount: BigInt,
   ): BigInt {
     let result = super.call(
       "repayBorrowAllowed",
@@ -2197,8 +2257,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(payer),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
 
     return result[0].toBigInt();
@@ -2208,7 +2268,7 @@ export class Comptroller extends ethereum.SmartContract {
     cToken: Address,
     payer: Address,
     borrower: Address,
-    repayAmount: BigInt
+    repayAmount: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "repayBorrowAllowed",
@@ -2217,8 +2277,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(payer),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(repayAmount)
-      ]
+        ethereum.Value.fromUnsignedBigInt(repayAmount),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2232,7 +2292,7 @@ export class Comptroller extends ethereum.SmartContract {
     cTokenBorrowed: Address,
     liquidator: Address,
     borrower: Address,
-    seizeTokens: BigInt
+    seizeTokens: BigInt,
   ): BigInt {
     let result = super.call(
       "seizeAllowed",
@@ -2242,8 +2302,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cTokenBorrowed),
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(seizeTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(seizeTokens),
+      ],
     );
 
     return result[0].toBigInt();
@@ -2254,7 +2314,7 @@ export class Comptroller extends ethereum.SmartContract {
     cTokenBorrowed: Address,
     liquidator: Address,
     borrower: Address,
-    seizeTokens: BigInt
+    seizeTokens: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "seizeAllowed",
@@ -2264,8 +2324,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cTokenBorrowed),
         ethereum.Value.fromAddress(liquidator),
         ethereum.Value.fromAddress(borrower),
-        ethereum.Value.fromUnsignedBigInt(seizeTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(seizeTokens),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2278,7 +2338,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "seizeGuardianPaused",
       "seizeGuardianPaused():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -2288,7 +2348,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "seizeGuardianPaused",
       "seizeGuardianPaused():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2301,7 +2361,7 @@ export class Comptroller extends ethereum.SmartContract {
     cToken: Address,
     src: Address,
     dst: Address,
-    transferTokens: BigInt
+    transferTokens: BigInt,
   ): BigInt {
     let result = super.call(
       "transferAllowed",
@@ -2310,8 +2370,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(src),
         ethereum.Value.fromAddress(dst),
-        ethereum.Value.fromUnsignedBigInt(transferTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(transferTokens),
+      ],
     );
 
     return result[0].toBigInt();
@@ -2321,7 +2381,7 @@ export class Comptroller extends ethereum.SmartContract {
     cToken: Address,
     src: Address,
     dst: Address,
-    transferTokens: BigInt
+    transferTokens: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "transferAllowed",
@@ -2330,8 +2390,8 @@ export class Comptroller extends ethereum.SmartContract {
         ethereum.Value.fromAddress(cToken),
         ethereum.Value.fromAddress(src),
         ethereum.Value.fromAddress(dst),
-        ethereum.Value.fromUnsignedBigInt(transferTokens)
-      ]
+        ethereum.Value.fromUnsignedBigInt(transferTokens),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2344,7 +2404,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.call(
       "transferGuardianPaused",
       "transferGuardianPaused():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -2354,7 +2414,7 @@ export class Comptroller extends ethereum.SmartContract {
     let result = super.tryCall(
       "transferGuardianPaused",
       "transferGuardianPaused():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
