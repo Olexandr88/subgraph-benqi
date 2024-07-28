@@ -13,6 +13,10 @@ import { CToken } from "../types/templates/CToken/CToken";
 import { exponentToBigDecimal, mantissaFactor, mantissaFactorBD, cTokenDecimalsBD, zeroBD } from "./helpers";
 import { MANTISSA_FACTOR, QIAVAX_TOKEN_ADDRESS, WAVAX_TOKEN_ADDRESS } from "./constants";
 
+export const BIGDECIMAL_HUNDRED = new BigDecimal(BigInt.fromI32(100));
+export const DAYS_PER_YEAR = 365;
+export const SECONDS_PER_YEAR = 60 * 60 * 24 * DAYS_PER_YEAR;
+
 let cUSDCAddress = "0x39aa39c021dfbae8fac545936693ac917d5e7563";
 let cETHAddress = "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5";
 let daiAddress = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
@@ -376,29 +380,40 @@ export function updateMarket(marketAddress: Address, blockNumber: i32, blockTime
       .div(exponentToBigDecimal(market.underlyingDecimals))
       .truncate(market.underlyingDecimals);
 
-    // Must convert to BigDecimal, and remove 10^18 that is used for Exp in Compound Solidity
-    market.borrowRate = contract
-      .borrowRatePerTimestamp()
-      .toBigDecimal()
-      .times(BigDecimal.fromString("2102400"))
-      .div(mantissaFactorBD)
-      .truncate(mantissaFactor);
+    let borrowRateResult = contract.try_borrowRatePerTimestamp();
+    if (borrowRateResult.reverted) {
+      log.warning(`[updateMarket] Failed to get borrowRate of Market ${marketID}`, [
+        marketID,
+      ]);
+    } else{
+      market.borrowRate = convertRatePerUnitToAPY(
+        borrowRateResult.value,
+        SECONDS_PER_YEAR
+      )
+    }
 
-    // This fails on only the first call to cZRX. It is unclear why, but otherwise it works.
-    // So we handle it like this.
-    //TODO @yhayun
-    // let supplyRatePerBlock = contract.su()
-    // if (supplyRatePerBlock.reverted) {
-    //   log.info('***CALL FAILED*** : cERC20 supplyRatePerBlock() reverted', [])
-    //   market.supplyRate = zeroBD
-    // } else {
-    //   market.supplyRate = supplyRatePerBlock.value
-    //     .toBigDecimal()
-    //     .times(BigDecimal.fromString('2102400'))
-    //     .div(mantissaFactorBD)
-    //     .truncate(mantissaFactor)
-    // }
+    let supplyRateResult = contract.try_supplyRatePerTimestamp();
+    if (supplyRateResult.reverted) {
+      log.warning(`[updateMarket] Failed to get supplyRate of Market ${marketID}`, [
+        marketID,
+      ]);
+    } else {
+      market.supplyRate = convertRatePerUnitToAPY(
+        supplyRateResult.value,
+        SECONDS_PER_YEAR
+      )
+    }
+
     market.save();
   }
   return market as Market;
+}
+
+// @ts-ignore
+function convertRatePerUnitToAPY(ratePerUnit: BigInt,  unitPerYear: i32): BigDecimal {
+  return ratePerUnit
+    .times(BigInt.fromI32(unitPerYear))
+    .toBigDecimal()
+    .div(mantissaFactorBD)
+    .times(BIGDECIMAL_HUNDRED);
 }
