@@ -13,8 +13,8 @@ generate types:
 ### Guides
 
 - Deploying subgraphs to Moonriver [https://docs.moonbeam.network/builders/integrations/indexers/thegraph/]
-- Reference (Compund V2) [https://github.com/compound-finance/compound-v2-subgraph]
-- Partial Benqi graph (Compund V2):
+- Reference (Compound V2) [https://github.com/compound-finance/compound-v2-subgraph]
+- Partial Benqi graph (Compound V2):
   - [https://github.com/ChaosLabsInc/benqi-subgraph-partial]
   - [https://github.com/token-terminal/tt-subgraphs/tree/main/benqi/v1-avalanche]
 
